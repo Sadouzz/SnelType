@@ -1,7 +1,7 @@
 // src/Bullet.js
 /*
-import React from 'react';
-import bulletImgSrc from './assets/bullet.png';
+import React from 'react';*/
+import bulletImgSrc from './assets/bullet.png';/*
 import styled, { css, keyframes } from 'styled-components';
 
 const Bullet = ({ x, y, angle }) => {
@@ -11,7 +11,7 @@ const Bullet = ({ x, y, angle }) => {
     top: `${y}`,
     width: '5px',
     height: '10px',
-    backgroundColor: 'red',
+    
     transform: `rotate(${angle}deg)`,
     animation: ( ) => css`${rotateAnimation} 2s linear infinite`
   };
@@ -35,7 +35,7 @@ export default Bullet;
 import React, { useEffect, useState } from 'react';
 import './App.css'; // Import CSS for styling
 
-const Bullet = ({ x, y, ox, oy }) => {
+const Bullet = ({ x, y, ox, oy, angle }) => {
   const [isVisible, setIsVisible] = useState(true);
   const [position, setPosition] = useState({ x: ox, y: oy });
 
@@ -51,12 +51,16 @@ const Bullet = ({ x, y, ox, oy }) => {
     setPosition({ x: x, y: y }); // Example final position
   };
 
+  const style = {
+    transform: `rotate(${angle}rad)`
+  };
+
   return (
     <>
     {
       isVisible && (
       <div className="sliding-square" style={{ transform: `translate(${position.x}px, ${position.y}px)` }} onClick={handleClick} >
-        
+        <img style={style} src={bulletImgSrc} />
       </div>
     )
     

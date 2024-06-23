@@ -21,17 +21,17 @@ body {
   z-index: -10;
 }
 
-.hero  {
+#hero  {
   width: 100%;
   height: auto;
   justify-content: center;
   align-self: end;
   display: flex;
-
+  margin-bottom: 20px;
   /*border-radius: 100%;*/
 }
 
-.hero img{
+#hero img{
   width: 50px;
   align-self: end;
 }
@@ -99,10 +99,13 @@ body {
 }
 
 .sliding-square {
-  background-color: white;
-  width: 10px;
-  height: 10px;
+  width: 25px;
+  height: 25px;
   transition: transform 0.3s ease-in-out; /* Use transform for smooth animation */
   position: absolute; /* Ensure correct positioning */
   border-radius: 100%;
+}
+
+.sliding-square img{
+  width: 100%;
 }

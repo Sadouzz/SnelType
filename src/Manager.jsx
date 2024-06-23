@@ -21,6 +21,9 @@ function Manager() {
 
 
     //const bulletImage = `<img src=${bulletImgSrc}/>`;
+    const [heroImgStyle, setHeroImgStyle] = useState({
+        transform: `rotate(${0}deg)`
+    });
 
     const [out, setOut] = useState();
     const [target, setTarget] = useState(null);
@@ -123,19 +126,29 @@ function Manager() {
     }*/
     function SetBullet(wordTargeted) {
         var container = document.getElementById('ws-wrapper');
+        var hero = document.getElementById('hero');
+        const heroRect = hero.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
         const wordTargetedPos = wordTargeted.getBoundingClientRect();
         const ax = containerRect.x + container.offsetWidth / 2;
         const ay = containerRect.y + container.offsetHeight;
         const ox = container.offsetWidth / 2;
-        const oy = window.innerHeight - 200;
+        const oy = heroRect.y;
         const x = wordTargetedPos.x - containerRect.x;
-        const y = wordTargetedPos.y;
+        const y = wordTargetedPos.y - 50;
+        const ab = (ox-x)/(oy-y);
+        const angle = Math.atan(-ab);
 
 
 
-        setBullets([...bullets, { x, y, ox, oy }]);
+        setBullets([...bullets, { x, y, ox, oy, angle }]);
+        RotateHero(angle);
+    }
 
+    function RotateHero(angle){
+        setHeroImgStyle({
+            transform: `rotate(${angle}rad)`
+        });
     }
 
 
@@ -242,10 +255,10 @@ function Manager() {
         <div id='manager'>
             <div id="ws-wrapper">
                 {bullets.map((bullet, index) => (
-                    <Bullet key={index} x={bullet.x} y={bullet.y} ox={bullet.ox} oy={bullet.oy} />
+                    <Bullet key={index} x={bullet.x} y={bullet.y} ox={bullet.ox} oy={bullet.oy} angle={bullet.angle} />
                 ))}
-                <div className="hero"><img src={playerImgSrc} /></div>
-                
+                <div id="hero"><img id='heroImg' style={heroImgStyle} src={playerImgSrc} /></div>
+
 
             </div>
             <div id='test'>
