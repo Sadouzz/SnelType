@@ -1,0 +1,108 @@
+body {
+  overflow: hidden;
+
+}
+
+#all {
+  margin: 50px;
+  overflow: hidden;
+}
+
+#ws-wrapper {
+  display: flex;
+  overflow: hidden;
+  background-color: #31312e;
+  min-width: 500px;
+  max-width: 700px;
+  min-height: 800px;
+  max-height: 900px;
+  border-radius: 2%;
+  box-shadow: rgba(0, 0, 0, 0.76) 10px 22px 70px 4px;
+  z-index: -10;
+}
+
+.hero  {
+  width: 100%;
+  height: auto;
+  justify-content: center;
+  align-self: end;
+  display: flex;
+
+  /*border-radius: 100%;*/
+}
+
+.hero img{
+  width: 50px;
+  align-self: end;
+}
+
+.wordsContainer{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#test {
+  position: absolute;
+  bottom: 0;
+  left: 25vw;
+}
+
+#scoreDiv {
+  position: absolute;
+  bottom: 0;
+  left: 75vw;
+}
+
+.banner{
+  background-color: aqua;
+  height: 500px;
+  width: 500px;
+}
+
+.animWord {
+  position: absolute;
+  z-index: 1;
+  padding: 0.1%;
+  border-radius: 70%;
+  animation: WordToBottom linear 20s forwards, l1 4s infinite forwards;
+}
+
+
+
+.bullet {
+  animation: BulletToTop .15s forwards;
+}
+
+@keyframes WordToBottom {
+  to {
+    top: 872.5px;
+  }
+}
+
+@keyframes BulletToTop {
+  to {
+    top: 7.5vh;
+  }
+}
+
+/* HTML: <div class="loader"></div> */
+
+@keyframes l1{
+  12.5% {border-radius: 37% 63% 70% 30% / 30% 62% 38% 70%}
+  25%   {border-radius: 50% 50% 70% 30% / 52% 62% 38% 48%}
+  37.5% {border-radius: 33% 67% 18% 82% / 52% 75% 25% 48%}
+  50%   {border-radius: 73% 27% 18% 82% / 52% 32% 68% 48%}
+  62.5% {border-radius: 73% 27% 74% 26% / 64% 32% 68% 36%}
+  75%   {border-radius: 84% 16% 15% 85% / 55% 79% 21% 45%}
+  87.5% {border-radius: 12% 88% 69% 31% / 10% 66% 34% 90%}
+}
+
+.sliding-square {
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  transition: transform 0.3s ease-in-out; /* Use transform for smooth animation */
+  position: absolute; /* Ensure correct positioning */
+  border-radius: 100%;
+}
