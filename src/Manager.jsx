@@ -32,6 +32,11 @@ function Manager() {
     const [score, setScore] = useState(0);
 
     const [bullets, setBullets] = useState([]);
+    const [playBool, setPlayBool] = useState(false);
+
+    const handleClickOnPlay = () => {
+        setPlayBool(!playBool);
+    }
 
     function handleKeyPress(event) {
         const keyPressed = event.key;
@@ -253,20 +258,28 @@ function Manager() {
 
     return (
         <div id='manager'>
-            <div id="ws-wrapper">
+            {!playBool && (<div id="menuUI">
+                <h1>SNEL TYPE</h1>
+                <div id='uiControls'>
+                    <button onClick={handleClickOnPlay}>Jouer</button>
+                    <button onClick={handleClickOnPlay}>Paramètres</button>
+                    <p>By Ousman SADJO</p>
+                </div>
+            </div>)}
+            {playBool && (<div id="ws-wrapper">
                 {bullets.map((bullet, index) => (
                     <Bullet key={index} x={bullet.x} y={bullet.y} ox={bullet.ox} oy={bullet.oy} angle={bullet.angle} />
                 ))}
                 <div id="hero"><img id='heroImg' style={heroImgStyle} src={playerImgSrc} /></div>
 
 
-            </div>
-            <div id='test'>
+            </div>)}
+            {playBool && (<div id='test'>
                 Target: {target}
-            </div>
-            <div id='scoreDiv'>
+            </div>)}
+            {playBool && (<div id='scoreDiv'>
                 Score: <span id='scoreSpan'>{score}</span>
-            </div>
+            </div>)}
         </div>
     );
 }

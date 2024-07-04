@@ -8,6 +8,29 @@ body {
   overflow: hidden;
 }
 
+#menuUI{
+  text-align: center;
+}
+
+#uiControls{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  gap: 20px;
+}
+
+#manager{
+  min-width: 500px;
+  max-width: 700px;
+  min-height: 800px;
+  max-height: 900px;
+  border-radius: 2%;
+  background-color: #31312e;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.76) 10px 22px 70px 4px;
+}
+
 #ws-wrapper {
   display: flex;
   overflow: hidden;
@@ -17,7 +40,6 @@ body {
   min-height: 800px;
   max-height: 900px;
   border-radius: 2%;
-  box-shadow: rgba(0, 0, 0, 0.76) 10px 22px 70px 4px;
   z-index: -10;
 }
 
@@ -34,6 +56,7 @@ body {
 #hero img{
   width: 50px;
   align-self: end;
+  z-index: 2;
 }
 
 .wordsContainer{
@@ -99,8 +122,9 @@ body {
 }
 
 .sliding-square {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
+  z-index: 1;
   transition: transform 0.3s ease-in-out; /* Use transform for smooth animation */
   position: absolute; /* Ensure correct positioning */
   border-radius: 100%;
