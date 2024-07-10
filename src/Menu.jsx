@@ -14,15 +14,16 @@ function Menu() {
 
     return (
         <div>
-            <div id="menuUI">
+            {!playBool && (<div id="menuUI">
                 <h1>SNEL TYPE</h1>
                 <div id='uiControls'>
                     <button onClick={handleClickOnPlay}>Jouer</button>
                     <button onClick={handleClickOnPlay}>Paramètres</button>
                     <p>By Ousman SADJO</p>
                 </div>
-                {playBool && (<Manager></Manager>)}
-            </div>
+                
+            </div>)}
+            {playBool && (<Manager/>)}
         </div>
     );
 }

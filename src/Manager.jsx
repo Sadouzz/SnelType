@@ -167,7 +167,6 @@ function Manager() {
 
     return (
         <div id='manager'>
-            
             <div id="ws-wrapper">
                 {bullets.map((bullet, index) => (
                     <Bullet key={index} x={bullet.x} y={bullet.y} ox={bullet.ox} oy={bullet.oy} angle={bullet.angle} />
@@ -181,9 +180,6 @@ function Manager() {
             </div>
             <div id='scoreDiv'>
                 Score: <span id='scoreSpan'>{score}</span>
-            </div>
-            <div id='playBoolValue'>
-                
             </div>
         </div>
     );
