@@ -19,6 +19,7 @@ function Menu() {
                 <div id='uiControls'>
                     <button onClick={handleClickOnPlay}>Jouer</button>
                     <button onClick={handleClickOnPlay}>Paramètres</button>
+                    <input type="file" capture="" accept="image/*" />
                     <p>By Ousman SADJO</p>
                 </div>
                 
