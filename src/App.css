@@ -12,6 +12,20 @@ body {
   text-align: center;
 }
 
+#gameOverUI{
+  z-index: 3;
+  position: absolute;
+  min-width: 500px;
+  max-width: 700px;
+  min-height: 800px;
+  max-height: 900px;
+  text-align: center;
+  border-radius: 2%;
+  background-color: #ec121271;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.76) 10px 22px 70px 4px;
+}
+
 #uiControls{
   display: flex;
   flex-direction: column;

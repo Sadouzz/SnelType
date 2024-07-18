@@ -8,7 +8,7 @@ import sound from './assets/click.wav'
 import shotSound from './assets/shot.mp3'
 import failSound from './assets/fail.wav'
 
-function Manager() {
+function Manager({gameOver}) {
 
     document.addEventListener('keydown', handleKeyPress);
     const shotSoundVar = new Audio(shotSound);
@@ -33,10 +33,17 @@ function Manager() {
 
     const [bullets, setBullets] = useState([]);
 
+    const [failedBool, setFailedBool] = useState("false");
+    var failed = false;
 
     function handleKeyPress(event) {
         const keyPressed = event.key;
-        KillWords(wordIndex, keyPressed);
+        var failDiv = document.getElementById('failedBoolDIV');
+        if(failDiv.textContent == "false")
+        {
+            KillWords(wordIndex, keyPressed);
+        }
+        
         //document.removeEventListener('keydown', handleKeyPress);
     }
 
@@ -87,12 +94,14 @@ function Manager() {
         element.style.left = `${x}px`;
         element.style.borderRadius = '10%';
         element.classList.add('animWord');
-        element.classList.add('word');/*
+        element.classList.add('word');
         setTimeout(function () {
             element.parentNode.removeChild(element);
-            var container = document.getElementById('scoreDiv');
-            alert(`Game Over. Score: ${container.textContent}`);
-        }, 20000);*/
+            failed = true;
+            setFailedBool(true);
+            var scoreDiv = document.getElementById('scoreSpan');
+            gameOver(scoreDiv.textContent);
+        }, 20000);
     }
 
     function SetBullet(wordTargeted) {
@@ -172,7 +181,7 @@ function Manager() {
                     <Bullet key={index} x={bullet.x} y={bullet.y} ox={bullet.ox} oy={bullet.oy} angle={bullet.angle} />
                 ))}
                 <div id="hero"><img id='heroImg' style={heroImgStyle} src={playerImgSrc} /></div>
-
+                <div id='failedBoolDIV' hidden>{failedBool}</div>
 
             </div>
             <div id='test'>
@@ -182,6 +191,7 @@ function Manager() {
                 Score: <span id='scoreSpan'>{score}</span>
             </div>
         </div>
+        
     );
 }
 
