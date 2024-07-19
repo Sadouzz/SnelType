@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import playerImgSrc from './assets/ship.png';
 //import bulletImgSrc from './assets/bullet.png';
 import Word from './word.js';
@@ -8,7 +8,7 @@ import sound from './assets/click.wav'
 import shotSound from './assets/shot.mp3'
 import failSound from './assets/fail.wav'
 
-function Manager({gameOver}) {
+function Manager({ gameOver }) {
 
     document.addEventListener('keydown', handleKeyPress);
     const shotSoundVar = new Audio(shotSound);
@@ -17,6 +17,8 @@ function Manager({gameOver}) {
     const wordListEasy = ['door', 'pen', 'have', 'your', 'water', 'bench'];
     const wordListMedium = ['bottle', 'account', 'treasure', 'vehicle', 'laptop', 'striker'];
     const wordListHard = ['accumulation', 'development', 'resources', 'headquarters', 'aeroplane', 'airport', 'building'];
+
+    //const [currentWords, setCurrentWords] = useState([""]);
 
 
 
@@ -39,11 +41,10 @@ function Manager({gameOver}) {
     function handleKeyPress(event) {
         const keyPressed = event.key;
         var failDiv = document.getElementById('failedBoolDIV');
-        if(failDiv.textContent == "false")
-        {
+        if (failDiv.textContent == "false") {
             KillWords(wordIndex, keyPressed);
         }
-        
+
         //document.removeEventListener('keydown', handleKeyPress);
     }
 
@@ -88,6 +89,7 @@ function Manager({gameOver}) {
 
     function SetPositionWord(element, container) {
         var x = Math.random() * (container.offsetWidth + container.getBoundingClientRect().x - container.getBoundingClientRect().x + 1) + container.getBoundingClientRect().x;
+        
         element.style.position = 'absolute';
         element.style.top = `${container.getBoundingClientRect().y}px`;
         element.style.backgroundColor = '#78786d';
@@ -95,12 +97,17 @@ function Manager({gameOver}) {
         element.style.borderRadius = '10%';
         element.classList.add('animWord');
         element.classList.add('word');
+        //alert(element);
+        //setCurrentWords([...currentWords, element.textContent]);
         setTimeout(function () {
-            element.parentNode.removeChild(element);
-            failed = true;
-            setFailedBool(true);
-            var scoreDiv = document.getElementById('scoreSpan');
-            gameOver(scoreDiv.textContent);
+            if (currentWords.includes(element)) {
+                element.parentNode.removeChild(element);
+                failed = true;
+                setFailedBool(true);
+                var scoreDiv = document.getElementById('scoreSpan');
+                gameOver(scoreDiv.textContent);
+            } 
+
         }, 20000);
     }
 
@@ -140,6 +147,9 @@ function Manager({gameOver}) {
                 return word[i];
                 //KillWords(word[i]);
             }
+            else {
+                failSoundVar.play();
+            }
         }
     }
 
@@ -163,7 +173,7 @@ function Manager({gameOver}) {
             if (word.textContent == "") {
                 setTarget();
                 setWordIndex(null);
-                setScore(score + 10);
+                setScore(score + 10 + 1);
                 word.parentNode.removeChild(word);
             }
             document.removeEventListener('keydown', handleKeyPress);
@@ -191,7 +201,7 @@ function Manager({gameOver}) {
                 Score: <span id='scoreSpan'>{score}</span>
             </div>
         </div>
-        
+
     );
 }
 

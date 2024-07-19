@@ -9,22 +9,51 @@ function Menu() {
 
     var play = false;
 
+    const [components, setComponents] = useState();
+    const [counter, setCounter] = useState(0);
+
+    const addNewComponent = () => {
+        setCounter(prevCounter => prevCounter + 1);
+        setComponents(<Manager gameOver={gameOver} key={counter}/>);
+    };
+
     function handleClickOnPlay() {
+        addNewComponent();
         setPlayBool(true);
         setgameOverBool(false);
         play = true;
     }
 
     function Retry() {
-        setPlayBool(false);
+        addNewComponent();
+        setPlayBool(true);
         setgameOverBool(false);
-        play = true;
+        removeWords();
+        /*setPlayBool(false);
+        setgameOverBool(false);
+        setTimeout(function () {
+            setPlayBool(true);
+        }, 1000);
+        play = true;*/
+    }
+
+    function Menu()
+    {
+
     }
 
     const gameOver = (score) => {
         setScoreOb(score)
         setgameOverBool(true);
     };
+
+    function removeWords()
+    {
+        var words = document.querySelectorAll(".word");
+        words.forEach(function (element) {
+            element.parentNode.removeChild(element);
+        });
+    }
 
 
     return (
@@ -49,7 +78,7 @@ function Menu() {
 
             </div>)}
 
-            {playBool && (<Manager gameOver={gameOver} />)}
+            {playBool && components}
             
         </div>
     );
