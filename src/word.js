@@ -4,7 +4,7 @@ class Word{
     }
 
     displayWord(){
-        console.log(`Word : ${this.word}`);
+       // console.log(`Word : ${this.word}`);
     }
 }
 

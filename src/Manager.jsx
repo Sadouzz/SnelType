@@ -18,7 +18,7 @@ function Manager({ gameOver }) {
     const wordListMedium = ['bottle', 'account', 'treasure', 'vehicle', 'laptop', 'striker'];
     const wordListHard = ['accumulation', 'development', 'resources', 'headquarters', 'aeroplane', 'airport', 'building'];
 
-    //const [currentWords, setCurrentWords] = useState([""]);
+    const [currentWords, setCurrentWords] = useState([]);
 
 
 
@@ -61,6 +61,7 @@ function Manager({ gameOver }) {
                 newWord.textContent = myWord.word;
 
                 container.appendChild(newWord);
+                //setCurrentWords([...currentWords, newWord]);
                 SetPositionWord(newWord, container);
                 //clearInterval(intervalID);
                 /*const newItems = [...currentWords, newWord];
@@ -89,7 +90,7 @@ function Manager({ gameOver }) {
 
     function SetPositionWord(element, container) {
         var x = Math.random() * (container.offsetWidth + container.getBoundingClientRect().x - container.getBoundingClientRect().x + 1) + container.getBoundingClientRect().x;
-        
+
         element.style.position = 'absolute';
         element.style.top = `${container.getBoundingClientRect().y}px`;
         element.style.backgroundColor = '#78786d';
@@ -100,14 +101,11 @@ function Manager({ gameOver }) {
         //alert(element);
         //setCurrentWords([...currentWords, element.textContent]);
         setTimeout(function () {
-            if (currentWords.includes(element)) {
-                element.parentNode.removeChild(element);
-                failed = true;
-                setFailedBool(true);
-                var scoreDiv = document.getElementById('scoreSpan');
-                gameOver(scoreDiv.textContent);
-            } 
-
+            element.parentNode.removeChild(element);
+            failed = true;
+            setFailedBool(true);
+            var scoreDiv = document.getElementById('scoreSpan');
+            gameOver(scoreDiv.textContent);
         }, 20000);
     }
 
