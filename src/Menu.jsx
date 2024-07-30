@@ -14,7 +14,7 @@ function Menu() {
 
     const addNewComponent = () => {
         setCounter(prevCounter => prevCounter + 1);
-        setComponents(<Manager gameOver={gameOver} key={counter}/>);
+        setComponents(<Manager gameOver={gameOver} key={counter} />);
     };
 
     function handleClickOnPlay() {
@@ -37,8 +37,7 @@ function Menu() {
         play = true;*/
     }
 
-    function Menu()
-    {
+    function Menu() {
 
     }
 
@@ -47,8 +46,7 @@ function Menu() {
         setgameOverBool(true);
     };
 
-    function removeWords()
-    {
+    function removeWords() {
         var words = document.querySelectorAll(".word");
         words.forEach(function (element) {
             element.parentNode.removeChild(element);
@@ -79,7 +77,12 @@ function Menu() {
             </div>)}
 
             {playBool && components}
-            
+            <div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
         </div>
     );
 }

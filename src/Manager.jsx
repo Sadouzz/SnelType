@@ -190,7 +190,7 @@ function Manager({ gameOver }) {
                 ))}
                 <div id="hero"><img id='heroImg' style={heroImgStyle} src={playerImgSrc} /></div>
                 <div id='failedBoolDIV' hidden>{failedBool}</div>
-
+                
             </div>
             <div id='test'>
                 Target: {target}
