@@ -187,7 +187,6 @@ function Manager({ gameOver }) {
     return (
         <div id='manager'>
             <div id="ws-wrapper">
-                .
                 {bullets.map((bullet, index) => (
                     <Bullet key={index} x={bullet.x} y={bullet.y} ox={bullet.ox} oy={bullet.oy} angle={bullet.angle} />
                 ))}
