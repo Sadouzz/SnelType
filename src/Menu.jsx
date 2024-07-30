@@ -56,6 +56,12 @@ function Menu() {
 
     return (
         <div id="globalManager">
+            <div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+                <div class="wave"></div>
+            </div>
             {!playBool && (<div id="menuUI">
                 <h1>SNEL TYPE</h1>
                 <div id='uiControls'>
@@ -77,12 +83,7 @@ function Menu() {
             </div>)}
 
             {playBool && components}
-            <div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-            </div>
+            
         </div>
     );
 }

@@ -89,7 +89,9 @@ function Manager({ gameOver }) {
     }, []);
 
     function SetPositionWord(element, container) {
-        var x = Math.random() * (container.offsetWidth + container.getBoundingClientRect().x - container.getBoundingClientRect().x + 1) + container.getBoundingClientRect().x;
+        /*var x = Math.random() * (container.offsetWidth + container.getBoundingClientRect().x - container.getBoundingClientRect().x + 1) + container.getBoundingClientRect().x;*/
+
+        var x = Math.random() * (container.offsetWidth);
 
         element.style.position = 'absolute';
         element.style.top = `${container.getBoundingClientRect().y}px`;
@@ -100,13 +102,13 @@ function Manager({ gameOver }) {
         element.classList.add('word');
         //alert(element);
         //setCurrentWords([...currentWords, element.textContent]);
-        setTimeout(function () {
+        /*setTimeout(function () {
             element.parentNode.removeChild(element);
             failed = true;
             setFailedBool(true);
             var scoreDiv = document.getElementById('scoreSpan');
             gameOver(scoreDiv.textContent);
-        }, 20000);
+        }, 20000);*/
     }
 
     function SetBullet(wordTargeted) {
@@ -185,6 +187,7 @@ function Manager({ gameOver }) {
     return (
         <div id='manager'>
             <div id="ws-wrapper">
+                .
                 {bullets.map((bullet, index) => (
                     <Bullet key={index} x={bullet.x} y={bullet.y} ox={bullet.ox} oy={bullet.oy} angle={bullet.angle} />
                 ))}

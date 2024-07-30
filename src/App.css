@@ -46,6 +46,7 @@ body {
 }
 
 #ws-wrapper {
+  position: relative;
   display: flex;
   overflow: hidden;
   background-color: #31312e;
@@ -98,8 +99,8 @@ body {
 }
 
 .animWord {
-  position: absolute;
-  z-index: 1;
+  position: relative;
+  z-index: 2;
   padding: 0.1%;
   border-radius: 70%;
   animation: WordToBottom linear 20s forwards, l1 4s infinite forwards;
@@ -150,17 +151,7 @@ body {
 
 
 
-@keyframes gradient {
-  0% {
-      background-position: 0% 0%;
-  }
-  50% {
-      background-position: 100% 100%;
-  }
-  100% {
-      background-position: 0% 0%;
-  }
-}
+
 
 .wave {
   background: rgb(255 255 255 / 25%);
@@ -173,7 +164,7 @@ body {
   opacity: 0.8;
   bottom: 0;
   left: 0;
-  z-index: -1;
+  z-index: 0;
 }
 
 .wave:nth-of-type(2) {
