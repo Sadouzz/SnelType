@@ -31,7 +31,8 @@ body {
   align-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: linear-gradient(315deg, #21251f 3%, #c8f560 38%, #4e415c 68%, #7862f8 98%);
+  /*background: linear-gradient(315deg, #21251f 3%, #c8f560 38%, #4e415c 68%, #7862f8 98%);*/
+  background: linear-gradient(315deg, #100f11 3%, #60b478 38%, #302e35 68%, #9a7cf8 98%);
   animation: gradient 45s ease infinite;
   background-size: 400% 400%;
   /*background: url(assets/Bg.png) no-repeat top center;*/

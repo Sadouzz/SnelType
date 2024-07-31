@@ -57,19 +57,20 @@ function Menu() {
     return (
         <div id="globalManager">
             <div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
-                <div class="wave"></div>
+                <div className="wave"></div>
+                <div className="wave"></div>
+                <div className="wave"></div>
+                <div className="wave"></div>
             </div>
             {!playBool && (<div id="menuUI">
-                <h1>SNEL TYPE</h1>
-                <div id='uiControls'>
-                    <button onClick={handleClickOnPlay}>Jouer</button>
-                    <button onClick={handleClickOnPlay}>Paramètres</button>
-                    <p>By Ousman SADJO</p>
+                <div className="menuTitle">
+                    <h1>SNEL TYPE</h1>
+                    <div id='uiControls'>
+                        <button onClick={handleClickOnPlay}>Jouer</button>
+                        <button onClick={handleClickOnPlay}>Paramètres</button>
+                        <p>By Ousman SADJO</p>
+                    </div>
                 </div>
-
             </div>)}
 
             {gameOverBool && (<div id="gameOverUI">
@@ -83,7 +84,7 @@ function Menu() {
             </div>)}
 
             {playBool && components}
-            
+
         </div>
     );
 }

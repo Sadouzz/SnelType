@@ -1,4 +1,5 @@
 import './App.css';
+import './backgroundStars.css'
 import React, { useEffect, useRef, useState } from 'react';
 import playerImgSrc from './assets/ship.png';
 //import bulletImgSrc from './assets/bullet.png';
@@ -7,6 +8,7 @@ import Bullet from './Bullet.jsx';
 import sound from './assets/click.wav'
 import shotSound from './assets/shot.mp3'
 import failSound from './assets/fail.wav'
+import LevelAnnouncer from './LevelAnnouncer.jsx';
 
 function Manager({ gameOver }) {
 
@@ -18,8 +20,19 @@ function Manager({ gameOver }) {
     const wordListMedium = ['bottle', 'account', 'treasure', 'vehicle', 'laptop', 'striker'];
     const wordListHard = ['accumulation', 'development', 'resources', 'headquarters', 'aeroplane', 'airport', 'building'];
 
-    const [currentWords, setCurrentWords] = useState([]);
+    const [level, setLevel] = useState(1);
+    //const [wordsCountLevel, setWordsCountLevel] = useState(0);
+    //const [currentWordsCountLevel, setCurrentWordsCountLevel] = useState(0);
+    const [counter, setCounter] = useState(0);
+    const [announce, setAnnounce] = useState(null);
+    const announceBool = useRef(true);
+    const showLevel = useRef(true);
 
+    const wordsNeeded = useRef(0);
+    const wordsCreated = useRef(0);
+    var currentWords = 0;
+    const currentCount = useRef(0);
+    const currentLevel = useRef(0);
 
 
     //const bulletImage = `<img src=${bulletImgSrc}/>`;
@@ -31,7 +44,9 @@ function Manager({ gameOver }) {
     const [target, setTarget] = useState(null);
     const [wordIndex, setWordIndex] = useState();
     //const [_wordIndex, setMyWordIndex] = useState();
-    const [score, setScore] = useState(0);
+    const score = useRef(0);
+
+    const allWordsCreated = useRef(false);
 
     const [bullets, setBullets] = useState([]);
 
@@ -44,14 +59,58 @@ function Manager({ gameOver }) {
         if (failDiv.textContent == "false") {
             KillWords(wordIndex, keyPressed);
         }
+        console.log("KeyPressed", keyPressed);
 
-        //document.removeEventListener('keydown', handleKeyPress);
+        document.removeEventListener('keydown', handleKeyPress);
     }
 
+
+
     useEffect(() => {
+        //level = 1;
+        //LevelManager();
+        //setWordsCountLevel(5);
+        //console.log(wordsCountLevel);
+        //wordsNeeded = wordsCountLevel + 1;
+        //console.log(wordsNeeded)
         const intervalId = setInterval(() => {
 
-            var scoreDiv = document.getElementById('scoreSpan');
+            //var scoreDiv = document.getElementById('scoreSpan');
+            if (wordsCreated.current < wordsNeeded.current) {
+
+                var container = document.getElementById('ws-wrapper');
+                const myWord = new Word(wordListEasy[Math.floor(Math.random() * wordListEasy.length)]);
+                myWord.displayWord();
+
+                const newWord = document.createElement('div');
+                newWord.textContent = myWord.word;
+
+                container.appendChild(newWord);
+                SetPositionWord(newWord, container);
+                //AddSubstractWordsCount(+1);
+                //setCurrentWordsCount(currentWordsCount => currentWordsCount + 1);
+                wordsCreated.current += 1;
+                //currentWords = currentWords + 1;
+                currentCount.current += 1;
+                //setCurrentWordsCountLevel(currentWordsCountLevel  + 1);
+
+                //console.log("Current Words", currentCount.current);
+                //console.log(wordsCreated);
+            }
+            else {
+                if (wordsCreated.current == wordsNeeded.current) {
+                    allWordsCreated.current = true;
+                }
+            }
+
+            if (currentCount.current === 0 && wordsCreated.current == wordsNeeded.current && allWordsCreated) {
+                LevelManager();
+                //console.log("Coucou");
+                //LevelAnnouncement();
+            }
+
+
+            /*var scoreDiv = document.getElementById('scoreSpan');
             if (scoreDiv.textContent < 100) {
                 var container = document.getElementById('ws-wrapper');
                 const myWord = new Word(wordListEasy[Math.floor(Math.random() * wordListEasy.length)]);
@@ -64,8 +123,8 @@ function Manager({ gameOver }) {
                 //setCurrentWords([...currentWords, newWord]);
                 SetPositionWord(newWord, container);
                 //clearInterval(intervalID);
-                /*const newItems = [...currentWords, newWord];
-                setWords(newItems);*/
+                const newItems = [...currentWords, newWord];
+                setWords(newItems);
             }
 
             if (scoreDiv.textContent < 500 && scoreDiv.textContent > 100) {
@@ -79,22 +138,79 @@ function Manager({ gameOver }) {
                 container.appendChild(newWord);
                 SetPositionWord(newWord, container);
                 //clearInterval(intervalID);
-                /*const newItems = [...currentWords, newWord];
-                setWords(newItems);*/
-            }
+                const newItems = [...currentWords, newWord];
+                setWords(newItems);
+            }*/
 
         }, 1000);
 
         return () => clearInterval(intervalId);
     }, []);
 
+    /*const LevelAnnouncement = () => {
+        //setCounter(prevCounter => prevCounter + 1);
+        setAnnounce(<LevelAnnouncer _index={currentLevel.current} _score={score.current} />
+        );
+        setTimeout(function () {
+            setAnnounce(undefined);
+        }, 1000);
+    };*/
+
+    /*function LevelAnnouncement()
+    {
+
+    }*/
+
+    function LevelManager() {
+        allWordsCreated.current = false;
+        showLevel.current = true;
+        currentLevel.current += 1;
+        announceBool.current = true;
+        setCounter(prevCounter => prevCounter + 1);
+        setAnnounce(<LevelAnnouncer _index={currentLevel.current} _score={score.current} key={counter} />);
+        if (currentLevel.current == 1) {
+            wordsNeeded.current = 4;
+            console.log("Level ", currentLevel.current);
+        }
+        if (currentLevel.current == 2) {
+            wordsCreated.current = 0;
+            wordsNeeded.current = 6;
+            console.log("Level ", currentLevel.current);
+        }
+        if (currentLevel.current == 3) {
+            wordsCreated.current = 0;
+            wordsNeeded.current = 10;
+            console.log("Level ", currentLevel.current);
+        }
+        if (currentLevel.current == 4) {
+            wordsCreated.current = 0;
+            wordsNeeded.current = 14;
+            console.log("Level ", currentLevel.current);
+        }
+        if (currentLevel.current == 5) {
+            wordsCreated.current = 0;
+            wordsNeeded.current = 15;
+            console.log("Level ", currentLevel.current);
+        }
+        if (currentLevel.current == 6) {
+            wordsCreated.current = 0;
+            wordsNeeded.current = 18;
+            console.log("Level ", currentLevel.current);
+        }
+        document.removeEventListener('keydown', handleKeyPress);
+        setTimeout(function () {
+            showLevel.current = false;
+            announceBool.current = false;
+        }, 1000);
+    }
+
     function SetPositionWord(element, container) {
         /*var x = Math.random() * (container.offsetWidth + container.getBoundingClientRect().x - container.getBoundingClientRect().x + 1) + container.getBoundingClientRect().x;*/
 
-        var x = Math.random() * (container.offsetWidth);
+        var x = Math.random() * (container.offsetWidth - 10);
 
         element.style.position = 'absolute';
-        element.style.top = `${container.getBoundingClientRect().y}px`;
+        element.style.top = `0px`;
         element.style.backgroundColor = '#78786d';
         element.style.left = `${x}px`;
         element.style.borderRadius = '10%';
@@ -108,7 +224,7 @@ function Manager({ gameOver }) {
             setFailedBool(true);
             var scoreDiv = document.getElementById('scoreSpan');
             gameOver(scoreDiv.textContent);
-        }, 20000);*/
+        }, 10000);*/
     }
 
     function SetBullet(wordTargeted) {
@@ -168,16 +284,20 @@ function Manager({ gameOver }) {
             setOut(word.textContent);
             setTarget(word.textContent);
             setWordIndex(word);
-            setScore(score + 1);
+            score.current += 1;
 
             if (word.textContent == "") {
                 setTarget();
                 setWordIndex(null);
-                setScore(score + 10 + 1);
+                score.current += 11;
                 word.parentNode.removeChild(word);
+                //currentWords = currentWords - 1;
+                currentCount.current -= 1;
+                //setCurrentWordsCount(currentWordsCount => currentWordsCount - 1);
+                //AddSubstractWordsCount(-    1);
+                //console.log("Current Words", currentCount.current);
             }
             document.removeEventListener('keydown', handleKeyPress);
-
         }
         else {
             failSoundVar.play();
@@ -187,18 +307,71 @@ function Manager({ gameOver }) {
     return (
         <div id='manager'>
             <div id="ws-wrapper">
+                <div className="stars">
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                    <div className="star"></div>
+                </div>
                 {bullets.map((bullet, index) => (
                     <Bullet key={index} x={bullet.x} y={bullet.y} ox={bullet.ox} oy={bullet.oy} angle={bullet.angle} />
                 ))}
                 <div id="hero"><img id='heroImg' style={heroImgStyle} src={playerImgSrc} /></div>
                 <div id='failedBoolDIV' hidden>{failedBool}</div>
-                
+                {announceBool.current && announce}
+
             </div>
             <div id='test'>
                 Target: {target}
             </div>
             <div id='scoreDiv'>
-                Score: <span id='scoreSpan'>{score}</span>
+                Score: <span id='scoreSpan'>{score.current}</span>
             </div>
         </div>
 
