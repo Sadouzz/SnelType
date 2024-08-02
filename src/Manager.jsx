@@ -27,6 +27,8 @@ function Manager({ gameOver }) {
     const [announce, setAnnounce] = useState(null);
     const announceBool = useRef(true);
     const showLevel = useRef(true);
+    const [levelAnnounce, setLevelAnnounce] = useState(true);
+    const announceRef = useRef(null);
 
     const wordsNeeded = useRef(0);
     const wordsCreated = useRef(0);
@@ -42,7 +44,7 @@ function Manager({ gameOver }) {
 
     const [out, setOut] = useState();
     const [target, setTarget] = useState(null);
-    const [wordIndex, setWordIndex] = useState();
+    const [wordIndex, setWordIndex] = useState(null);
     //const [_wordIndex, setMyWordIndex] = useState();
     const score = useRef(0);
 
@@ -56,13 +58,22 @@ function Manager({ gameOver }) {
     function handleKeyPress(event) {
         const keyPressed = event.key;
         var failDiv = document.getElementById('failedBoolDIV');
+        console.log("KeyPressed", keyPressed);
+        console.log("WordIndex:", wordIndex);
         if (failDiv.textContent == "false") {
             KillWords(wordIndex, keyPressed);
         }
-        console.log("KeyPressed", keyPressed);
 
-        document.removeEventListener('keydown', handleKeyPress);
+
+        //document.removeEventListener('keydown', handleKeyPress);
     }
+
+    /*useEffect(() => {
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, [wordIndex]);*/
 
 
 
@@ -73,6 +84,7 @@ function Manager({ gameOver }) {
         //console.log(wordsCountLevel);
         //wordsNeeded = wordsCountLevel + 1;
         //console.log(wordsNeeded)
+        //document.addEventListener('keydown', handleKeyPress);
         const intervalId = setInterval(() => {
 
             //var scoreDiv = document.getElementById('scoreSpan');
@@ -104,7 +116,10 @@ function Manager({ gameOver }) {
             }
 
             if (currentCount.current === 0 && wordsCreated.current == wordsNeeded.current && allWordsCreated) {
+                
                 LevelManager();
+                console.log("LevelManager called.");
+                //document.removeEventListener('keydown', handleKeyPress);
                 //console.log("Coucou");
                 //LevelAnnouncement();
             }
@@ -144,7 +159,7 @@ function Manager({ gameOver }) {
 
         }, 1000);
 
-        return () => clearInterval(intervalId);
+        return () => clearInterval(intervalId)/*;document.removeEventListener('keydown', handleKeyPress);*/;
     }, []);
 
     /*const LevelAnnouncement = () => {
@@ -162,52 +177,56 @@ function Manager({ gameOver }) {
     }*/
 
     function LevelManager() {
+        //document.removeEventListener('keydown', handleKeyPress);
         allWordsCreated.current = false;
-        showLevel.current = true;
+        //showLevel.current = true;
         currentLevel.current += 1;
-        announceBool.current = true;
-        setCounter(prevCounter => prevCounter + 1);
-        setAnnounce(<LevelAnnouncer _index={currentLevel.current} _score={score.current} key={counter} />);
-        if (currentLevel.current == 1) {
-            wordsNeeded.current = 4;
-            console.log("Level ", currentLevel.current);
+        //announceBool.current = true;
+        //setLevelAnnounce(true);
+        //announceRef.current = <LevelAnnouncer _index={currentLevel.current} _score={score.current} />;
+        //setCounter(prevCounter => prevCounter + 1);
+        //setAnnounce(<LevelAnnouncer />);
+        //document.removeEventListener('keydown', handleKeyPress);
+        switch (currentLevel.current) {
+            case 1:
+                wordsNeeded.current = 4;
+                break;
+            case 2:
+                wordsCreated.current = 0;
+                wordsNeeded.current = 6;
+                break;
+            case 3:
+                wordsCreated.current = 0;
+                wordsNeeded.current = 10;
+                break;
+            case 4:
+                wordsCreated.current = 0;
+                wordsNeeded.current = 14;
+                break;
+            case 5:
+                wordsCreated.current = 0;
+                wordsNeeded.current = 15;
+                break;
+            case 6:
+                wordsCreated.current = 0;
+                wordsNeeded.current = 18;
+                break;
+            default:
+                console.log("Niveau non géré : ", currentLevel.current);
         }
-        if (currentLevel.current == 2) {
-            wordsCreated.current = 0;
-            wordsNeeded.current = 6;
-            console.log("Level ", currentLevel.current);
-        }
-        if (currentLevel.current == 3) {
-            wordsCreated.current = 0;
-            wordsNeeded.current = 10;
-            console.log("Level ", currentLevel.current);
-        }
-        if (currentLevel.current == 4) {
-            wordsCreated.current = 0;
-            wordsNeeded.current = 14;
-            console.log("Level ", currentLevel.current);
-        }
-        if (currentLevel.current == 5) {
-            wordsCreated.current = 0;
-            wordsNeeded.current = 15;
-            console.log("Level ", currentLevel.current);
-        }
-        if (currentLevel.current == 6) {
-            wordsCreated.current = 0;
-            wordsNeeded.current = 18;
-            console.log("Level ", currentLevel.current);
-        }
-        document.removeEventListener('keydown', handleKeyPress);
-        setTimeout(function () {
-            showLevel.current = false;
-            announceBool.current = false;
-        }, 1000);
+        //document.removeEventListener('keydown', handleKeyPress);
+        /*setTimeout(function () {
+            //showLevel.current = false;
+            //announceBool.current = false;
+            //setLevelAnnounce(false);
+            document.removeEventListener('keydown', handleKeyPress);
+        }, 1000);*/
     }
 
     function SetPositionWord(element, container) {
         /*var x = Math.random() * (container.offsetWidth + container.getBoundingClientRect().x - container.getBoundingClientRect().x + 1) + container.getBoundingClientRect().x;*/
 
-        var x = Math.random() * (container.offsetWidth - 10);
+        var x = Math.random() * (container.offsetWidth - element.offsetWidth);
 
         element.style.position = 'absolute';
         element.style.top = `0px`;
@@ -218,13 +237,13 @@ function Manager({ gameOver }) {
         element.classList.add('word');
         //alert(element);
         //setCurrentWords([...currentWords, element.textContent]);
-        /*setTimeout(function () {
+        setTimeout(function () {
             element.parentNode.removeChild(element);
             failed = true;
             setFailedBool(true);
             var scoreDiv = document.getElementById('scoreSpan');
             gameOver(scoreDiv.textContent);
-        }, 10000);*/
+        }, 10000);
     }
 
     function SetBullet(wordTargeted) {
@@ -256,6 +275,7 @@ function Manager({ gameOver }) {
         console.log("SearchWords");
         var word = document.querySelectorAll('.word');
         let found = false;
+        //document.removeEventListener('keydown', handleKeyPress);
         for (var i = 0; i < word.length && found == false; i++) {
             if (keyPressed == word[i].textContent.charAt(0) || keyPressed.toLowerCase() == word[i].textContent.charAt(0)) {
                 found = true;
@@ -263,17 +283,21 @@ function Manager({ gameOver }) {
                 return word[i];
                 //KillWords(word[i]);
             }
-            else {
+            /*else {
                 failSoundVar.play();
-            }
+            }*/
         }
+        //document.removeEventListener('keydown', handleKeyPress);
     }
 
     function KillWords(word, keyPressed) {
-        console.log("KillWords");
+
         if (word == null) {
             word = SearchWord(keyPressed);
-            console.log(word);
+            console.log("Found:", word.textContent);
+        }
+        else {
+            console.log("KillWords Target:", word.textContent);
         }
 
         if (keyPressed == word.textContent.charAt(0) || keyPressed.toLowerCase() == word.textContent.charAt(0)) {
@@ -301,7 +325,9 @@ function Manager({ gameOver }) {
         }
         else {
             failSoundVar.play();
+            //document.removeEventListener('keydown', handleKeyPress);
         }
+        //document.removeEventListener('keydown', handleKeyPress);
     }
 
     return (
@@ -364,7 +390,10 @@ function Manager({ gameOver }) {
                 ))}
                 <div id="hero"><img id='heroImg' style={heroImgStyle} src={playerImgSrc} /></div>
                 <div id='failedBoolDIV' hidden>{failedBool}</div>
-                {announceBool.current && announce}
+                {true && (<div className="levelAnnouncer">
+                    <h2>LEVEL {currentLevel.current}</h2>
+                    <h3>Score {score.current}</h3>
+                </div>)}
 
             </div>
             <div id='test'>
