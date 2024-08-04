@@ -218,14 +218,14 @@ body {
   position: absolute;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: start;
   width: 100%;
   height: 100%;
   color: #60b478;
-  margin-left: 10%;
+  margin: 2%;
 }
 
-.levelAnnouncer h2, h3{
+.levelAnnouncer h4, h5{
   margin: 0;
 }

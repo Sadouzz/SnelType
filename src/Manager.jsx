@@ -391,8 +391,8 @@ function Manager({ gameOver }) {
                 <div id="hero"><img id='heroImg' style={heroImgStyle} src={playerImgSrc} /></div>
                 <div id='failedBoolDIV' hidden>{failedBool}</div>
                 {true && (<div className="levelAnnouncer">
-                    <h2>LEVEL {currentLevel.current}</h2>
-                    <h3>Score {score.current}</h3>
+                    <h4>LEVEL {currentLevel.current}</h4>
+                    <h5>Score {score.current}</h5>
                 </div>)}
 
             </div>
